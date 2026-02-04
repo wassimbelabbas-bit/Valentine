@@ -1,40 +1,134 @@
-<script>
-  const yesButton = document.getElementById('yesButton');
-  const noButton = document.getElementById('noButton');
-  const heartsContainer = document.querySelector('.hearts');
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ma Valentine ❤️</title>
 
-  const moveNo = () => {
-    const x = Math.random() * (window.innerWidth - 120);
-    const y = Math.random() * (window.innerHeight - 60);
-    noButton.style.position = "fixed";
-    noButton.style.left = `${x}px`;
-    noButton.style.top = `${y}px`;
-  };
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ffdee9, #b5fffc);
+            overflow: hidden;
+        }
 
-  noButton.addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    moveNo();
-  }, { passive: false });
+        h1 {
+            margin-bottom: 40px;
+            text-align: center;
+        }
 
-  noButton.addEventListener('pointerenter', moveNo);
-  noButton.addEventListener('mouseover', moveNo);
+        .buttons {
+            position: relative;
+            width: 220px;
+            height: 60px;
+        }
 
-  yesButton.addEventListener('click', () => {
-    for (let i = 0; i < 30; i++) {
-      createHeart();
-    }
-    alert('Merci ! Je t’aime !');
-  });
+        button {
+            padding: 12px 22px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+        }
 
-  function createHeart() {
-    const heart = document.createElement('div');
-    heart.classList.add('heart');
-    heart.innerText = '❤️';
-    heart.style.left = Math.random() * 100 + '%';
-    heartsContainer.appendChild(heart);
+        #yesButton {
+            background-color: #ff4d6d;
+            color: white;
+        }
 
-    setTimeout(() => {
-      heart.remove();
-    }, 3000);
-  }
-</script>
+        #noButton {
+            background-color: #ccc;
+            position: fixed;
+        }
+
+        .hearts {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 26px;
+            animation: fall 3s linear forwards;
+        }
+
+        @keyframes fall {
+            from {
+                transform: translateY(-10vh);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Veux-tu être ma Valentine ? 💘</h1>
+
+    <div class="buttons">
+        <button id="yesButton">Oui 💕</button>
+        <button id="noButton">Non 😅</button>
+    </div>
+
+    <div class="hearts"></div>
+
+    <script>
+        const yesButton = document.getElementById("yesButton");
+        const noButton = document.getElementById("noButton");
+        const heartsContainer = document.querySelector(".hearts");
+
+        const moveNo = () => {
+            const x = Math.random() * (window.innerWidth - 120);
+            const y = Math.random() * (window.innerHeight - 60);
+            noButton.style.left = `${x}px`;
+            noButton.style.top = `${y}px`;
+        };
+
+        noButton.addEventListener("touchstart", (e) => {
+            e.preventDefault();
+            moveNo();
+        }, { passive: false });
+
+        noButton.addEventListener("pointerenter", moveNo);
+        noButton.addEventListener("mouseover", moveNo);
+
+        yesButton.addEventListener("click", () => {
+            for (let i = 0; i < 40; i++) {
+                createHeart();
+            }
+            yesButton.style.display = "none";
+            noButton.style.display = "none";
+
+            setTimeout(() => {
+                document.body.innerHTML += "<h2>Merci ❤️ Je t’aime 💖</h2>";
+            }, 300);
+        });
+
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.textContent = "❤️";
+            heart.style.left = Math.random() * 100 + "%";
+            heart.style.animationDuration = (2 + Math.random() * 2) + "s";
+            heartsContainer.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 4000);
+        }
+    </script>
+
+</body>
+</html>
